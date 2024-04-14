@@ -1,38 +1,36 @@
-import app from './src/application.js';
 import axios from 'axios';
+import app from './src/application.js';
 
 app();
 
-const inputName = document.querySelector('#inputName')
-const inputEmail = document.querySelector('#inputEmail')
+const inputName = document.querySelector('#inputName');
+const inputEmail = document.querySelector('#inputEmail');
 
-async function fetch({data}) {
-  // const { name, email } = data;
-  axios.post('/users', data)
+async function fetch({ dateAxios }) {
+  axios.post('/users', dateAxios)
     .then((response) => {
       const { statusText } = response;
-      if (statusText !== "OK") {
+      if (statusText !== 'OK') {
         throw new Error('not success');
       }
-      console.log(response);
-      return { data } = response;
+      const { data } = response;
+      return data;
     })
-    .then((data) => {
-      const { message } = data.data;
+    .then((resp) => {
+      const { message } = resp.data;
       document.body.innerHTML = `<p>${message}</p>`;
     })
     .catch((e) => console.log(e));
 }
 
-const buttonSubmit = document.querySelector("input[type=submit]");
-buttonSubmit.setAttribute('disabled', "true");
+const buttonSubmit = document.querySelector('input[type=submit]');
+buttonSubmit.setAttribute('disabled', 'true');
 console.log(buttonSubmit);
 buttonSubmit.addEventListener('click', (e) => {
   e.preventDefault();
   const name = inputName.value;
   const email = inputEmail.value;
   fetch({ name, email });
-
 });
 
 function validateName(name) {
@@ -66,15 +64,15 @@ function validateEmail(email) {
   return true;
 }
 
-inputName.addEventListener('input', (e) => {
-  const value = inputName.value;
+inputName.addEventListener('input', () => {
+  const { value } = inputName;
   const result = validateName(value);
   if (result) {
-    inputName.classList.remove("is-invalid");
-    inputName.classList.add("is-valid");
+    inputName.classList.remove('is-invalid');
+    inputName.classList.add('is-valid');
   } else {
-    inputName.classList.remove("is-valid");
-    inputName.classList.add("is-invalid");
+    inputName.classList.remove('is-valid');
+    inputName.classList.add('is-invalid');
   }
   const valid = document.querySelectorAll('.is-valid').length;
   if (valid === 2) {
@@ -84,15 +82,15 @@ inputName.addEventListener('input', (e) => {
   }
 });
 
-inputEmail.addEventListener('input', (e) => {
-  const value = inputEmail.value;
+inputEmail.addEventListener('input', () => {
+  const { value } = inputEmail;
   const result = validateEmail(value);
   if (result) {
-    inputEmail.classList.remove("is-invalid");
-    inputEmail.classList.add("is-valid");
+    inputEmail.classList.remove('is-invalid');
+    inputEmail.classList.add('is-valid');
   } else {
-    inputEmail.classList.remove("is-valid");
-    inputEmail.classList.add("is-invalid");
+    inputEmail.classList.remove('is-valid');
+    inputEmail.classList.add('is-invalid');
   }
   const valid = document.querySelectorAll('.is-valid').length;
   if (valid === 2) {
